@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import SkillsSection from './components/SkillsSection';
 import ExperienceSection from './components/ExperienceSection';
 import ProjectsSection from './components/ProjectsSection';
 import EducationSection from './components/EducationSection';
-import ContactSection from './components/ContactSection';
+
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
 export function App() {
@@ -50,29 +50,29 @@ export function App() {
         <ExperienceSection />
         <ProjectsSection />
         <EducationSection />
-        <ContactSection />
       </main>
 
       <Footer />
       <Chatbot />
 
-      {/* Back to Top Button - appears after scrolling down */}
+      {/* Back to Top Button - improved for mobile */}
       {scrollProgress > 20 && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-20 right-6 p-3 rounded-full bg-primary text-primary-foreground shadow-lg z-40 hover:bg-primary/90 transition-all duration-300 animate-fade-in"
+          className="fixed bottom-16 sm:bottom-20 right-4 sm:right-6 p-2 sm:p-3 rounded-full bg-primary text-primary-foreground shadow-lg z-30 hover:bg-primary/90 transition-all duration-300 animate-fade-in"
           aria-label="Back to top"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
+            className="sm:w-6 sm:h-6"
           >
             <path d="m18 15-6-6-6 6"/>
           </svg>
