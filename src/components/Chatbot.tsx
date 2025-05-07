@@ -69,7 +69,7 @@ const Chatbot = () => {
       {/* Chatbot Button - Adjusted for mobile */}
       <button
         onClick={toggleChatbot}
-        className={`fixed bottom-4 sm:bottom-6 right-4 sm:right-6 p-3 sm:p-4 rounded-full shadow-lg z-40 transition-colors ${isOpen ? 'bg-primary text-primary-foreground' : 'bg-primary text-primary-foreground'}`}
+        className={`fixed bottom-4 sm:bottom-6 right-4 sm:right-6 p-3 sm:p-4 rounded-full shadow-xl z-40 transition-all duration-300 hover:scale-105 ${isOpen ? 'bg-primary text-primary-foreground' : 'bg-primary text-primary-foreground'}`}
         aria-label="Toggle chatbot"
       >
         {isOpen ? <X size={20} className="sm:w-6 sm:h-6" /> : <MessageSquare size={20} className="sm:w-6 sm:h-6" />}

@@ -77,28 +77,30 @@ const SkillsSection = () => {
         </p>
 
         {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12 animate-slide-up" style={{ animationDelay: '200ms' }}>
-          {categories.map((category, index) => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 shadow-sm ${
-                activeCategory === category
-                  ? 'bg-primary text-primary-foreground scale-105'
-                  : 'bg-background border border-border text-foreground hover:bg-accent hover:border-primary/20'
-              }`}
-              style={{ animationDelay: `${300 + index * 50}ms` }}
-            >
-              {category}
-            </button>
-          ))}
+        <div className="flex overflow-x-auto pb-2 md:pb-0 mb-10 md:mb-12 md:flex-wrap justify-start md:justify-center gap-2 animate-slide-up snap-x md:snap-none scrollbar-hide" style={{ animationDelay: '200ms' }}>
+          <div className="flex md:flex-wrap space-x-2 md:space-x-0 md:gap-3 px-4 md:px-0 md:w-auto w-max mx-auto md:mx-0">
+            {categories.map((category, index) => (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`whitespace-nowrap px-3 md:px-5 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-medium transition-all duration-300 shadow-sm snap-center ${
+                  activeCategory === category
+                    ? 'bg-primary text-primary-foreground scale-105 border border-primary'
+                    : 'bg-background border border-border text-foreground hover:bg-accent hover:border-primary/20'
+                }`}
+                style={{ animationDelay: `${300 + index * 50}ms` }}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Skills Grid with Enhanced Hover Effects */}
         <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-8 lg:grid-cols-10 gap-4 animate-slide-up" style={{ animationDelay: '300ms' }}>
           {filteredSkills.map((skill, index) => (
             <div
-              key={skill.name}
+              key={`${skill.name}-${skill.category}`}
               className="group relative flex flex-col items-center justify-center bg-background/80 rounded-md border border-border p-3 aspect-square shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 animate-fade-in overflow-hidden"
               style={{ animationDelay: `${400 + index * 50}ms` }}
             >
@@ -129,7 +131,7 @@ const SkillsSection = () => {
               { name: 'Laravel', icon: <i className="devicon-laravel-plain colored text-3xl"></i> }
             ].map((tech, index) => (
               <div
-                key={tech.name}
+                key={`${tech.name}-${index}`}
                 className="group relative flex flex-col items-center justify-center bg-background/80 rounded-md border border-border p-3 aspect-square shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 animate-fade-in overflow-hidden"
                 style={{ animationDelay: `${700 + index * 100}ms` }}
               >

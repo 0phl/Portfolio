@@ -89,7 +89,7 @@ export function App() {
       {scrollProgress > 20 && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-16 sm:bottom-20 right-4 sm:right-6 p-2 sm:p-3 rounded-full bg-primary text-primary-foreground shadow-lg z-30 hover:bg-primary/90 transition-all duration-300 animate-fade-in"
+          className="fixed bottom-24 sm:bottom-28 right-4 sm:right-6 p-2 sm:p-3 rounded-full bg-primary text-primary-foreground shadow-lg z-30 hover:bg-primary/90 transition-all duration-300 animate-fade-in"
           aria-label="Back to top"
         >
           <svg
