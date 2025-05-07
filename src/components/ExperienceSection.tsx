@@ -10,7 +10,7 @@ interface ExperienceItem {
 const ExperienceSection = () => {
   const [expandedItems, setExpandedItems] = useState<number[]>([]);
   const contentRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const ITEMS_TO_SHOW = 3; // Number of description items to show initially
+  const ITEMS_TO_SHOW = 2; // Number of description items to show initially
   
   const toggleExpand = (index: number) => {
     setExpandedItems(prev => 
@@ -68,7 +68,7 @@ const ExperienceSection = () => {
                 style={{ animationDelay: `${200 + index * 150}ms` }}
               >
                 <div className="absolute left-[-8px] top-0 w-4 h-4 rounded-full bg-primary shadow-glow"></div>
-                <div className="bg-background/60 backdrop-blur-sm rounded-lg p-5 border border-border shadow-md hover:shadow-lg transition-all duration-300">
+                <div className="bg-gradient-to-br from-background/90 to-background/70 backdrop-blur-sm rounded-lg p-5 border border-border border-l-[3px] border-l-primary/70 shadow-md sm:hover:shadow-xl transition-all duration-300 sm:hover:-translate-y-1 sm:hover:rotate-[0.5deg] relative before:absolute before:inset-0 before:bg-primary/5 before:opacity-0 sm:hover:before:opacity-100 before:transition-opacity before:rounded-lg before:z-[-1]">
                   <h3 className="text-xl md:text-2xl font-bold">{exp.title}</h3>
                   <p className="text-base md:text-lg text-primary/80 font-medium">{exp.company}</p>
                   <p className="text-sm text-muted-foreground mb-4">

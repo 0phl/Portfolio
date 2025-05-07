@@ -95,7 +95,9 @@ module.exports = {content: [
         },
         "bounce": {
           "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-25%)" },
+          "25%": { transform: "translateY(-10px)" },
+          "50%": { transform: "translateY(-5px)" },
+          "75%": { transform: "translateY(-8px)" },
         },
         "spin-slow": {
           from: { transform: "rotate(0deg)" },
@@ -104,6 +106,10 @@ module.exports = {content: [
         "shimmer": {
           "0%": { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
+        },
+        "subtle-bounce": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-4px)" },
         },
       },
       animation: {
@@ -117,9 +123,10 @@ module.exports = {content: [
         "slide-right": "slide-right 0.6s ease-out forwards",
         "pulse": "pulse 2s infinite",
         "float": "float 3s ease-in-out infinite",
-        "bounce": "bounce 1.5s ease-in-out infinite",
+        "bounce": "bounce 1s ease-in-out infinite",
         "spin-slow": "spin-slow 8s linear infinite",
         "shimmer": "shimmer 2s infinite",
+        "subtle-bounce": "subtle-bounce 2s ease-in-out infinite",
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -137,6 +144,14 @@ module.exports = {content: [
       boxShadow: {
         'highlight': '0 0 15px rgba(59, 130, 246, 0.5)',
       },
+      scrollbar: {
+        thin: 'thin',
+        thumb: 'rounded-full',
+        track: 'rounded-full',
+      },
     },
   },
+  plugins: [
+    require('tailwind-scrollbar'),
+  ],
 }
