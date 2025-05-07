@@ -1,5 +1,6 @@
 import useTypewriter from '../hooks/useTypewriter';
 import { Download } from 'lucide-react';
+import LazyImage from './ui/LazyImage';
 
 const HeroSection = () => {
   // Multiple text options for the typewriter effect
@@ -64,12 +65,15 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Profile image - improved for mobile */}
-          <div className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-72 md:h-72 rounded-full overflow-hidden border-4 border-primary/20 shadow-xl mt-4 md:mt-0 animate-fade-in" style={{ animationDelay: '500ms' }}>
-            <img
+          {/* Profile image with LazyImage component */}
+          <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-72 md:h-72 rounded-full overflow-hidden border-4 border-primary/20 shadow-xl mt-4 md:mt-0 animate-fade-in" style={{ animationDelay: '500ms' }}>
+            <LazyImage
               src="/images/profile/Myphoto.jpeg"
               alt="Ronan Dela Cruz"
               className="w-full h-full object-cover"
+              containerClassName="w-full h-full"
+              placeholderClassName="rounded-full"
+              preload={true}
             />
           </div>
         </div>
