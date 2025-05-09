@@ -66,16 +66,19 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Profile image with LazyImage component */}
-          <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-72 md:h-72 rounded-full overflow-hidden border-4 border-primary/20 shadow-xl mt-4 md:mt-0 animate-fade-in" style={{ animationDelay: '500ms' }}>
-            <LazyImage
-              src="/images/profile/Myphoto.jpeg"
-              alt="Ronan Dela Cruz"
-              className="w-full h-full object-cover"
-              containerClassName="w-full h-full"
-              placeholderClassName="rounded-full"
-              preload={true}
-            />
+          {/* Minimalist professional profile image */}
+          <div className="relative w-56 h-56 md:w-64 md:h-64 mt-4 md:mt-0 animate-fade-in"
+               style={{ animationDelay: '500ms' }}>
+            {/* Simple profile container with subtle shadow and border */}
+            <div className="absolute inset-0 rounded-full overflow-hidden shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(0,0,0,0.2)] border border-gray-100/30 dark:border-gray-700/30">
+              <LazyImage
+                src="/images/profile/Myphoto.png"
+                alt="Ronan Dela Cruz"
+                className="w-full h-full object-cover"
+                containerClassName="w-full h-full"
+                preload={true}
+              />
+            </div>
           </div>
         </div>
       </div>
