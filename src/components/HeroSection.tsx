@@ -49,9 +49,10 @@ const HeroSection = () => {
                 View Projects
               </a>
               <a
-                href="/resume.pdf"
+                href="/documents/Ronan_Dela_Cruz_Resume.pdf"
                 className="inline-flex h-9 sm:h-10 items-center justify-center rounded-md border border-input bg-background px-4 sm:px-6 text-xs sm:text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground gap-1 sm:gap-2 hover-lift"
-                download
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Download size={14} className="sm:w-4 sm:h-4" />
                 Resume
