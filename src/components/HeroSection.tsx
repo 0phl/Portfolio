@@ -83,29 +83,28 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Animated scroll arrow - improved positioning for mobile */}
-      <div className="absolute bottom-8 sm:bottom-12 md:bottom-20 left-1/2 transform -translate-x-1/2 z-40 animate-fade-in" style={{ animationDelay: '800ms' }}>
+      {/* Animated scroll arrow - aligned with photo center on mobile */}
+      <div className="absolute bottom-12 sm:bottom-12 md:bottom-20 z-40 animate-fade-in
+                      left-[calc(49%-1rem)] -translate-x-1/2
+                      md:left-1/2 md:-translate-x-1/2"
+           style={{ animationDelay: '800ms' }}>
         <a
           href="#skills"
-          className="block"
+          className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12"
           aria-label="Scroll to skills section"
         >
-          <div className="w-10 h-10 sm:w-12 sm:h-12 flex flex-col items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="36"
-              height="36"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-primary animate-bounce opacity-80 hover:opacity-100 transition-opacity"
-            >
-              <path d="M12 5v14M5 12l7 7 7-7"/>
-            </svg>
-          </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-6 h-6 sm:w-8 sm:h-8 text-primary animate-bounce opacity-80 hover:opacity-100 transition-opacity"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 5v14M5 12l7 7 7-7"/>
+          </svg>
         </a>
       </div>
     </section>
