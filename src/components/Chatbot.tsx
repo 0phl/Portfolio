@@ -134,7 +134,7 @@ const Chatbot = () => {
       setIsTyping(false);
       const welcomeMessageId = 'welcome-message';
       const welcomeMessage: Message = {
-        text: "Hi there! I'm Ronan's virtual assistant. How can I help you today?",
+        text: "Hi there! I'm Ronan's virtual assistant. This bot is still a work in progress. All responses are pre-defined for now.",
         sender: 'bot',
         timestamp: new Date(),
         id: welcomeMessageId
@@ -190,22 +190,57 @@ const Chatbot = () => {
 
   const getBotResponse = (userInput: string): string => {
     const input = userInput.toLowerCase();
+
     if (input.includes('name')) {
-      return "My name is Ronan Dela Cruz. I'm an aspiring full-stack web developer.";
-    } else if (input.includes('experience') || input.includes('work')) {
-      return 'I have experience as a Web Developer Intern at Tech Solutions Inc. and as a Junior Frontend Developer at Digital Creations.';
-    } else if (input.includes('skill') || input.includes('technologies')) {
-      return 'I work with React, JavaScript, TypeScript, Node.js, Express, MongoDB, and more. Check out my Skills section for the complete list!';
-    } else if (input.includes('project')) {
-      return "I've worked on various projects including a personal portfolio, e-commerce dashboard, and a task management app. You can see them in the Projects section.";
-    } else if (input.includes('education') || input.includes('study')) {
-      return "I have a Bachelor's degree in Computer Science from University of Technology and completed additional certifications in web development and UI/UX design.";
-    } else if (input.includes('contact') || input.includes('email') || input.includes('reach')) {
-      return 'You can reach me at ronan@example.com or connect with me on LinkedIn or GitHub. Links are in the footer!';
-    } else if (input.includes('hello') || input.includes('hi') || input.includes('hey')) {
-      return 'Hello there! How can I help you today?';
-    } else {
-      return "I'm not sure I understand. Could you ask about my skills, experience, projects, education, or contact information?";
+      return "My name is Ronan Dela Cruz. I'm an aspiring full-stack web developer based in Manila, Philippines.";
+    }
+
+    else if (input.includes('experience') || input.includes('work')) {
+      return "I'm currently a Student Developer working on my capstone project PULSE at St. Dominic College of Asia. I've also been developing personal projects as a Full-Stack Developer, including mobile apps and web applications using modern technologies.";
+    }
+
+    else if (input.includes('skill') || input.includes('technologies') || input.includes('tech')) {
+      return "I work with JavaScript, TypeScript, PHP, Java, C++, React, Next.js, Tailwind CSS, Firebase, Flutter, Dart, MySQL, Git, and more. I'm currently learning Python, REST API, and Laravel. Check out my Skills section for the complete list!";
+    }
+
+    else if (input.includes('project')) {
+      return "I've worked on several projects including PULSE (a barangay-level mobile app with SuperAdmin dashboard), AroundU (neighborhood guide app), S&Z Hot Pot Haven (food ordering system), and a Car Rental System. You can see them all in the Projects section!";
+    }
+
+    else if (input.includes('education') || input.includes('study') || input.includes('school') || input.includes('college')) {
+      return "I'm currently pursuing a Bachelor of Science in Information Technology at St. Dominic College of Asia (2022-Present). I completed my senior high school with ICT strand at Informatics Philippines (2020-2022).";
+    }
+
+    else if (input.includes('contact') || input.includes('email') || input.includes('reach') || input.includes('hire')) {
+      return "You can reach me at roncruz1503@gmail.com. I'm also on GitHub (@0phl), LinkedIn, and Facebook. I'm currently available for freelance work and open to full-time opportunities!";
+    }
+
+    else if (input.includes('location') || input.includes('where') || input.includes('based')) {
+      return "I'm based in Manila, Philippines. I'm available for both local and remote opportunities.";
+    }
+
+    else if (input.includes('capstone') || input.includes('pulse')) {
+      return "PULSE is my capstone project - a barangay-level mobile application with Material Design UI for public updates, digital services, and community marketplace. I also built the SuperAdmin web dashboard using Flutter Web with Firebase integration.";
+    }
+
+    else if (input.includes('github') || input.includes('code') || input.includes('repository')) {
+      return "You can find my code on GitHub at github.com/0phl. I have various projects showcasing my skills in web development, mobile apps, and full-stack solutions.";
+    }
+
+    else if (input.includes('available') || input.includes('freelance') || input.includes('opportunity')) {
+      return "Yes! I'm currently available for freelance work and open to full-time opportunities. I typically respond within 24 hours. Feel free to reach out at roncruz1503@gmail.com!";
+    }
+
+    else if (input.includes('hello') || input.includes('hi') || input.includes('hey') || input.includes('greet')) {
+      return 'Hello there! How can I help you today? Feel free to ask about my skills, projects, education, or experience!';
+    }
+
+    else if (input.includes('resume') || input.includes('cv')) {
+      return "You can download my resume from the hero section of this website. It contains detailed information about my experience, skills, and projects.";
+    }
+
+    else {
+      return "I'm not sure I understand that question. You can ask me about my skills, experience, projects, education, contact information, or availability. What would you like to know?";
     }
   };
 
@@ -236,7 +271,7 @@ const Chatbot = () => {
         setIsTyping(false);
         const welcomeMessageId = 'welcome-message';
         const welcomeMessage: Message = {
-          text: "Hi there! I'm Ronan's virtual assistant. How can I help you today?",
+          text: "Hi there! I'm Ronan's virtual assistant. This bot is still a work in progress. All responses are pre-defined for now.",
           sender: 'bot',
           timestamp: new Date(),
           id: welcomeMessageId
