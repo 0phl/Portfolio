@@ -134,7 +134,7 @@ const Chatbot = () => {
       setIsTyping(false);
       const welcomeMessageId = 'welcome-message';
       const welcomeMessage: Message = {
-        text: "Hi there! I'm Ronan's virtual assistant. This bot is still a work in progress. All responses are pre-defined for now.",
+        text: "Hi there! I'm Ronan's AI assistant, How can i help you today?",
         sender: 'bot',
         timestamp: new Date(),
         id: welcomeMessageId
@@ -161,19 +161,8 @@ const Chatbot = () => {
     // Show typing indicator
     setIsTyping(true);
 
-    // Generate bot response
-    setTimeout(() => {
-      const botMessageId = `bot-${Date.now()}`;
-      const botMessage: Message = {
-        text: getBotResponse(input),
-        sender: 'bot',
-        timestamp: new Date(),
-        id: botMessageId
-      };
-      setIsTyping(false);
-      setMessages(prev => [...prev, botMessage]);
-      if (!isOpen) setHasNewMessage(true);
-    }, 2500);
+    // Generate bot response using RAG API
+    getBotResponseFromAPI(input);
   };
 
   // Track which messages have been rendered to avoid re-animating them
@@ -188,59 +177,50 @@ const Chatbot = () => {
     }
   }, [messages]);
 
-  const getBotResponse = (userInput: string): string => {
-    const input = userInput.toLowerCase();
+  const getBotResponseFromAPI = async (userInput: string) => {
+    try {
+      const response = await fetch('https://portfolio-chatbot-backend-jilr.onrender.com/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: userInput
+        })
+      });
 
-    if (input.includes('name')) {
-      return "My name is Ronan Dela Cruz. I'm an aspiring full-stack web developer based in Manila, Philippines.";
-    }
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-    else if (input.includes('experience') || input.includes('work')) {
-      return "I'm currently a Student Developer working on my capstone project PULSE at St. Dominic College of Asia. I've also been developing personal projects as a Full-Stack Developer, including mobile apps and web applications using modern technologies.";
-    }
-
-    else if (input.includes('skill') || input.includes('technologies') || input.includes('tech')) {
-      return "I work with JavaScript, TypeScript, PHP, Java, C++, React, Next.js, Tailwind CSS, Firebase, Flutter, Dart, MySQL, Git, and more. I'm currently learning Python, REST API, and Laravel. Check out my Skills section for the complete list!";
-    }
-
-    else if (input.includes('project')) {
-      return "I've worked on several projects including PULSE (a barangay-level mobile app with SuperAdmin dashboard), AroundU (neighborhood guide app), S&Z Hot Pot Haven (food ordering system), and a Car Rental System. You can see them all in the Projects section!";
-    }
-
-    else if (input.includes('education') || input.includes('study') || input.includes('school') || input.includes('college')) {
-      return "I'm currently pursuing a Bachelor of Science in Information Technology at St. Dominic College of Asia (2022-Present). I completed my senior high school with ICT strand at Informatics Philippines (2020-2022).";
-    }
-
-    else if (input.includes('contact') || input.includes('email') || input.includes('reach') || input.includes('hire')) {
-      return "You can reach me at roncruz1503@gmail.com. I'm also on GitHub (@0phl), LinkedIn, and Facebook. I'm currently available for freelance work and open to full-time opportunities!";
-    }
-
-    else if (input.includes('location') || input.includes('where') || input.includes('based')) {
-      return "I'm based in Manila, Philippines. I'm available for both local and remote opportunities.";
-    }
-
-    else if (input.includes('capstone') || input.includes('pulse')) {
-      return "PULSE is my capstone project - a barangay-level mobile application with Material Design UI for public updates, digital services, and community marketplace. I also built the SuperAdmin web dashboard using Flutter Web with Firebase integration.";
-    }
-
-    else if (input.includes('github') || input.includes('code') || input.includes('repository')) {
-      return "You can find my code on GitHub at github.com/0phl. I have various projects showcasing my skills in web development, mobile apps, and full-stack solutions.";
-    }
-
-    else if (input.includes('available') || input.includes('freelance') || input.includes('opportunity')) {
-      return "Yes! I'm currently available for freelance work and open to full-time opportunities. I typically respond within 24 hours. Feel free to reach out at roncruz1503@gmail.com!";
-    }
-
-    else if (input.includes('hello') || input.includes('hi') || input.includes('hey') || input.includes('greet')) {
-      return 'Hello there! How can I help you today? Feel free to ask about my skills, projects, education, or experience!';
-    }
-
-    else if (input.includes('resume') || input.includes('cv')) {
-      return "You can download my resume from the hero section of this website. It contains detailed information about my experience, skills, and projects.";
-    }
-
-    else {
-      return "I'm not sure I understand that question. You can ask me about my skills, experience, projects, education, contact information, or availability. What would you like to know?";
+      const data = await response.json();
+      
+      const botMessageId = `bot-${Date.now()}`;
+      const botMessage: Message = {
+        text: data.response || "I apologize, but I didn't receive a proper response. Could you please try asking your question again?",
+        sender: 'bot',
+        timestamp: new Date(),
+        id: botMessageId
+      };
+      
+      setIsTyping(false);
+      setMessages(prev => [...prev, botMessage]);
+      if (!isOpen) setHasNewMessage(true);
+      
+    } catch (error) {
+      console.error('Error calling RAG API:', error);
+      
+      const errorMessageId = `bot-error-${Date.now()}`;
+      const errorMessage: Message = {
+        text: "I'm sorry, I'm having trouble connecting to my knowledge base right now.",
+        sender: 'bot',
+        timestamp: new Date(),
+        id: errorMessageId
+      };
+      
+      setIsTyping(false);
+      setMessages(prev => [...prev, errorMessage]);
+      if (!isOpen) setHasNewMessage(true);
     }
   };
 
@@ -271,7 +251,7 @@ const Chatbot = () => {
         setIsTyping(false);
         const welcomeMessageId = 'welcome-message';
         const welcomeMessage: Message = {
-          text: "Hi there! I'm Ronan's virtual assistant. This bot is still a work in progress. All responses are pre-defined for now.",
+          text: "Hi there! I'm Ronan's AI assistant, How can i help you today?",
           sender: 'bot',
           timestamp: new Date(),
           id: welcomeMessageId
