@@ -5,7 +5,7 @@ import LazyImage from './ui/LazyImage';
 const HeroSection = () => {
   // Multiple text options for the typewriter effect
   const phrases = [
-    'An aspiring full-stack developer.',
+    'A full-stack developer.',
     'Building modern web experiences.',
     'Turning ideas into reality.',
     'Passionate about clean code.'
