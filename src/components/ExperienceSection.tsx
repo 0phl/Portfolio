@@ -26,7 +26,7 @@ const ExperienceSection = () => {
       company: 'St. Dominic College of Asia',
       period: 'Oct 2024 – Present',
       description: [
-        'Co-developed PULSE, a barangay-level mobile application featuring Material Design UI with custom animations for public updates, digital services, and community marketplace engagement',
+        'Co-developed PULSE — a barangay-level mobile application built with Flutter and Firebase, featuring a Material Design UI with custom animations. The app enables public updates, access to local services, and community engagement through features like community posting, a local marketplace, volunteer registration, and barangay report submission.',
         'Built the SuperAdmin web dashboard using Flutter Web with responsive layouts and data visualization tools to manage admin registrations, verify community credentials, and monitor real-time platform analytics',
         'Integrated Firebase Authentication, Firestore, and Realtime Database with custom Node.js notification server for secure login, real-time updates, and optimized data flow',
         'Implemented email notifications with PIN verification, custom push notification channels, and role-based access control for scalable, secure platform management across multiple community levels',
