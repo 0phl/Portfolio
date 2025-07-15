@@ -4,6 +4,8 @@
   "private": true,
   "license": "MIT",
   "type": "module",
+  "homepage": "https://ronandelacruz.me",
+
   "scripts": {
     "dev": "npx vite",
     "build": "npx vite build",

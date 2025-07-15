@@ -17,7 +17,7 @@ const EducationSection = () => {
     {
       degree: "Bachelor of Science in Information Technology",
       institution: "St. Dominic College of Asia",
-      period: "August 2022 - Present",
+      period: "2022 - 2026",
       description:
         "Pursuing a comprehensive program focused on modern information technology concepts, software development, and systems design.",
       logo: "/images/logo/sdcalogo.png",
