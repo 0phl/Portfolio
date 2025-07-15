@@ -16,6 +16,7 @@ const Chatbot = () => {
   const [isTyping, setIsTyping] = useState(false); // Start with typing indicator inactive
   const [initialGreetingShown, setInitialGreetingShown] = useState(false);
   const [showInitialTyping, setShowInitialTyping] = useState(false); // Track initial typing state
+  const [isProcessing, setIsProcessing] = useState(false); // Track if bot is processing a response
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [hasNewMessage, setHasNewMessage] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -124,7 +125,10 @@ const Chatbot = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || isProcessing || isTyping) return; // Prevent submission if processing or typing
+
+    // Set processing state to prevent spam
+    setIsProcessing(true);
 
     // Ensure initial greeting is shown if it hasn't been already
     if (!initialGreetingShown) {
@@ -204,12 +208,13 @@ const Chatbot = () => {
       };
       
       setIsTyping(false);
+      setIsProcessing(false); // Reset processing state
       setMessages(prev => [...prev, botMessage]);
       if (!isOpen) setHasNewMessage(true);
-      
+
     } catch (error) {
       console.error('Error calling RAG API:', error);
-      
+
       const errorMessageId = `bot-error-${Date.now()}`;
       const errorMessage: Message = {
         text: "I'm sorry, I'm having trouble connecting to my knowledge base right now.",
@@ -217,8 +222,9 @@ const Chatbot = () => {
         timestamp: new Date(),
         id: errorMessageId
       };
-      
+
       setIsTyping(false);
+      setIsProcessing(false); // Reset processing state on error
       setMessages(prev => [...prev, errorMessage]);
       if (!isOpen) setHasNewMessage(true);
     }
@@ -498,35 +504,44 @@ const Chatbot = () => {
             transition-all duration-500
             ${isClosing ? 'opacity-0 transform translate-y-4' : 'opacity-100 transform translate-y-0'}
           `}>
-            <form onSubmit={handleSubmit} className="flex gap-2 items-start">
-              <div className="flex-1 relative">
+            <form onSubmit={handleSubmit} className="space-y-2">
+              <div className="flex gap-2 items-start">
+                <div className="flex-1 relative">
                 <textarea
                   ref={textareaRef}
                   rows={1}
                   value={input}
-                  onChange={e => setInput(e.target.value)}
+                  onChange={e => {
+                    const value = e.target.value;
+                    if (value.length <= 1000) {
+                      setInput(value);
+                    }
+                  }}
                   onKeyDown={e => {
                     if (e.key === 'Enter' && !e.shiftKey) {
                       e.preventDefault();
-                      if (input.trim()) handleSubmit(e);
+                      if (input.trim() && !isProcessing && !isTyping) handleSubmit(e);
                     }
                   }}
-                  placeholder="Type your message..."
-                  className="w-full px-4 py-2 text-sm rounded-2xl border border-gray-200 dark:border-gray-700
+                  placeholder={isProcessing || isTyping ? "Please wait for response..." : "Type your message..."}
+                  disabled={isProcessing || isTyping}
+                  maxLength={1000}
+                  className={`w-full px-4 py-2 text-sm rounded-2xl border border-gray-200 dark:border-gray-700
                           bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100
                           focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500/50
                           transition-all duration-300 placeholder:text-gray-400 dark:placeholder:text-gray-500
                           resize-none min-h-[40px] max-h-[100px] overflow-y-auto
-                          scrollbar-none"
+                          scrollbar-none
+                          ${isProcessing || isTyping ? 'opacity-60 cursor-not-allowed' : ''}`}
                 />
-              </div>
-              <button
+                </div>
+                <button
                 type="submit"
-                disabled={!input.trim()}
+                disabled={!input.trim() || isProcessing || isTyping}
                 className={`
                   h-[40px] w-[40px] rounded-full flex items-center justify-center shrink-0
                   transition-all duration-300 ease-in-out
-                  ${input.trim()
+                  ${input.trim() && !isProcessing && !isTyping
                     ? 'bg-gradient-to-br from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500 text-white shadow-md hover:shadow-lg hover:scale-105 active:scale-95'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600 cursor-not-allowed'
                   }
@@ -534,7 +549,18 @@ const Chatbot = () => {
                 aria-label="Send message"
               >
                 <Send size={16} className="transform rotate-45" />
-              </button>
+                </button>
+              </div>
+              {/* Character counter */}
+              <div className={`text-xs text-right transition-all duration-200 ${
+                input.length > 900
+                  ? 'text-red-500 dark:text-red-400'
+                  : input.length > 800
+                    ? 'text-yellow-500 dark:text-yellow-400'
+                    : 'text-gray-400 dark:text-gray-500'
+              }`}>
+                {input.length}/1000
+              </div>
             </form>
           </div>
         </div>
