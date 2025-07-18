@@ -48,7 +48,7 @@ export function App() {
     
     // Preload critical images
     const profileImage = new Image();
-    profileImage.src = '/images/profile/Myphoto.jpeg';
+    profileImage.src = '/images/profile/Myphoto.png';
     
     return () => clearTimeout(timer);
   }, []);
