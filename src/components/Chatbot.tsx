@@ -183,7 +183,7 @@ const Chatbot = () => {
 
   const getBotResponseFromAPI = async (userInput: string) => {
     try {
-      const response = await fetch('https://portfolio-chatbot-backend-jilr.onrender.com/api/chat', {
+      const response = await fetch('https://api.ronandelacruz.me/api/chat', {
         method: 'POST',
         credentials: 'include', 
         headers: {
