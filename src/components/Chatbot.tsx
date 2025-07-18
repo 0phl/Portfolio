@@ -185,6 +185,7 @@ const Chatbot = () => {
     try {
       const response = await fetch('https://portfolio-chatbot-backend-jilr.onrender.com/api/chat', {
         method: 'POST',
+        credentials: 'include', 
         headers: {
           'Content-Type': 'application/json',
         },
