@@ -2,7 +2,7 @@
 const getApiBaseUrl = (): string => {
   const url = import.meta.env.VITE_API_URL;
   if (!url) {
-    throw new Error('VITE_API_URL environment variable is not set. Please check your .env file.');
+    throw new Error('VITE_API_URL environment variable is not set. Please check your GitHub repository secrets.');
   }
   return url;
 };
