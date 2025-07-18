@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { MessageSquare, Send, X } from 'lucide-react';
+import { apiRequest, API_CONFIG } from '../config/api';
 
 interface Message {
   text: string;
@@ -183,20 +184,12 @@ const Chatbot = () => {
 
   const getBotResponseFromAPI = async (userInput: string) => {
     try {
-      const response = await fetch('https://api.ronandelacruz.me/api/chat', {
+      const response = await apiRequest(API_CONFIG.ENDPOINTS.CHAT, {
         method: 'POST',
-        credentials: 'include', 
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify({
           message: userInput
         })
       });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
 
       const data = await response.json();
       
