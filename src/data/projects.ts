@@ -108,6 +108,62 @@ export const projects: Project[] = [
     endDate: "2024-11"
   },
 
+    {
+    id: "aroundu",
+    title: "Arround U",
+    description:
+      "AroundU is a community-driven web app that connects St. Dominic students with trusted local partner businesses. It helps students discover, review, and engage with nearby cafes, shops, and services, while giving businesses smart tools to reach and serve the student community more effectively.",
+    images: [
+      "/images/projects/aroundu/aroundu1.jpg",
+      "/images/projects/aroundu/aroundu2.jpg",
+      "/images/projects/aroundu/aroundu3.jpg",
+      "/images/projects/aroundu/aroundu4.jpg",
+      "/images/projects/aroundu/aroundu5.jpg",
+      "/images/projects/aroundu/aroundu6.jpg",
+      "/images/projects/aroundu/aroundu7.jpg",
+      "/images/projects/aroundu/aroundu8.jpg",
+      "/images/projects/aroundu/aroundu9.jpg",
+
+    ],
+    tags: ["React", "TypeScript", "Tailwind CSS", "Firebase" , "Leaflet.js"],
+    category: "MobileWebApp",
+    // liveLink: "https://play.google.com/store", // Commented out - no download available yet
+     github: "https://github.com/0phl/AroundU", // Commented out - private repository
+    featured: false,
+    status: "completed",
+    startDate: "2024-11",
+    endDate: "2024-12",
+    isLiveDemo: false // This will show "Download" for mobile app when liveLink is available
+    // Mobile apps don't need URL since they use PhoneFrame
+  },
+
+      {
+    id: "aroundu-admin",
+    title: "Arround U Admin Dashbaordad",
+    description:
+      "AroundU is a community-driven web app that connects St. Dominic students with trusted local partner businesses. It helps students discover, review, and engage with nearby cafes, shops, and services, while giving businesses smart tools to reach and serve the student community more effectively.",
+    images: [
+      "/images/projects/aroundu/arounduad1.jpg",
+      "/images/projects/aroundu/arounduad2.jpg",
+      "/images/projects/aroundu/arounduad3.jpg",
+      "/images/projects/aroundu/arounduad4.jpg",
+      "/images/projects/aroundu/arounduad5.jpg",
+      "/images/projects/aroundu/arounduad6.jpg",
+
+    ],
+    tags: ["React", "TypeScript", "Tailwind CSS", "Firebase" , "Leaflet.js"],
+    category: "Web Application",
+    // liveLink: "https://play.google.com/store", // Commented out - no download available yet
+     github: "https://github.com/0phl/AroundU", // Commented out - private repository
+    featured: false,
+    url: "Around U Admin Dashboard",
+    status: "completed",
+    startDate: "2024-11",
+    endDate: "2024-12",
+    isLiveDemo: false // This will show "Download" for mobile app when liveLink is available
+    // Mobile apps don't need URL since they use PhoneFrame
+  },
+
 
 
 
@@ -124,6 +180,11 @@ export const getProjectsByCategory = (category: string): Project[] => {
 
   if (category === "All") {
     filteredProjects = projects
+  } else if (category === "Web Application") {
+    // Include both Web Application and MobileWebApp projects
+    filteredProjects = projects.filter(project =>
+      project.category === "Web Application" || project.category === "MobileWebApp"
+    )
   } else {
     filteredProjects = projects.filter(project => project.category === category)
   }
@@ -143,5 +204,9 @@ export const getProjectById = (id: string): Project | undefined => {
 }
 
 export const getCategories = (): string[] => {
-  return ["All", ...Array.from(new Set(projects.map(project => project.category)))]
+  const categories = projects.map(project => {
+    // Group MobileWebApp projects under Web Application for UI display
+    return project.category === "MobileWebApp" ? "Web Application" : project.category
+  })
+  return ["All", ...Array.from(new Set(categories))]
 }
