@@ -58,7 +58,8 @@ const ProjectsSection = () => {
     }
   }
 
-  const isMobileApp = (category: string) => category.toLowerCase().includes("mobile")
+  const isMobileApp = (category: string) =>
+    category.toLowerCase().includes("mobile") || category === "MobileWebApp"
 
   // Intersection Observer for mobile featured badge visibility
   useEffect(() => {
@@ -144,7 +145,10 @@ const ProjectsSection = () => {
                   {category}
                   {category !== "All" && (
                     <span className="ml-1.5 px-2 py-0.5 bg-primary/10 text-primary text-[10px] sm:text-xs rounded-full">
-                      {projects.filter((p) => p.category === category).length}
+                      {category === "Web Application"
+                        ? projects.filter((p) => p.category === "Web Application" || p.category === "MobileWebApp").length
+                        : projects.filter((p) => p.category === category).length
+                      }
                     </span>
                   )}
                 </button>
