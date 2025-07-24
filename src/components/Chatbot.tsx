@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { MessageSquare, Send, X } from 'lucide-react';
+import { MessageSquare, Send, X, Info } from 'lucide-react';
 import { apiRequest, API_CONFIG } from '../config/api';
 
 interface Message {
@@ -21,8 +21,15 @@ const Chatbot = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [hasNewMessage, setHasNewMessage] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const infoButtonRef = useRef<HTMLButtonElement>(null);
+  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
+  const [isMobileTooltip, setIsMobileTooltip] = useState(false);
   const [animationStage, setAnimationStage] = useState<'initial' | 'entering' | 'entered' | 'exiting' | 'exited'>('initial');
   const [renderedMessages, setRenderedMessages] = useState<Set<string>>(new Set());
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+  const [hasShownAutoTooltip, setHasShownAutoTooltip] = useState(false);
+  const [tooltipAnimating, setTooltipAnimating] = useState(false);
 
   // Add animations to document head
   useEffect(() => {
@@ -62,6 +69,42 @@ const Chatbot = () => {
 
       .animate-subtle-bounce {
         animation: subtle-bounce 2s ease-in-out infinite;
+      }
+
+      @keyframes tooltipIn {
+        0% { opacity: 0; transform: translateY(calc(-100% + 10px)) scale(0.9); }
+        100% { opacity: 1; transform: translateY(-100%) scale(1); }
+      }
+
+      @keyframes tooltipOut {
+        0% { opacity: 1; transform: translateY(-100%) scale(1); }
+        100% { opacity: 0; transform: translateY(calc(-100% + 10px)) scale(0.9); }
+      }
+
+      @keyframes tooltipInDesktop {
+        0% { opacity: 0; transform: translateX(-50%) translateY(calc(-100% + 10px)) scale(0.9); }
+        100% { opacity: 1; transform: translateX(-50%) translateY(-100%) scale(1); }
+      }
+
+      @keyframes tooltipOutDesktop {
+        0% { opacity: 1; transform: translateX(-50%) translateY(-100%) scale(1); }
+        100% { opacity: 0; transform: translateX(-50%) translateY(calc(-100% + 10px)) scale(0.9); }
+      }
+
+      .animate-tooltip-in {
+        animation: tooltipIn 0.2s ease-out forwards;
+      }
+
+      .animate-tooltip-out {
+        animation: tooltipOut 0.2s ease-in forwards;
+      }
+
+      .animate-tooltip-in-desktop {
+        animation: tooltipInDesktop 0.2s ease-out forwards;
+      }
+
+      .animate-tooltip-out-desktop {
+        animation: tooltipOutDesktop 0.2s ease-in forwards;
       }
     `;
     document.head.appendChild(style);
@@ -269,12 +312,108 @@ const Chatbot = () => {
     }
   }, [showInitialTyping, isOpen, initialGreetingShown]);
 
+  // Auto-show tooltip when chatbot opens for the first time
+  useEffect(() => {
+    if (isOpen && !hasShownAutoTooltip) {
+      // Small delay to ensure the chat panel is fully rendered
+      const showTimer = setTimeout(() => {
+        calculateTooltipPosition();
+        setIsTooltipVisible(true);
+        setHasShownAutoTooltip(true);
+      }, 300);
+
+      const hideTimer = setTimeout(() => {
+        if (isTooltipVisible) {
+          setTooltipAnimating(true);
+          setTimeout(() => {
+            setIsTooltipVisible(false);
+            setTooltipAnimating(false);
+          }, 200);
+        }
+      }, 5300); // Hide after 5 seconds (plus the initial delay)
+
+      return () => {
+        clearTimeout(showTimer);
+        clearTimeout(hideTimer);
+      };
+    }
+  }, [isOpen, hasShownAutoTooltip, isTooltipVisible]);
+
+  // Click outside handler for tooltip
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node) && isTooltipVisible) {
+        setTooltipAnimating(true);
+        setTimeout(() => {
+          setIsTooltipVisible(false);
+          setTooltipAnimating(false);
+        }, 200);
+      }
+    };
+
+    if (isTooltipVisible) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isTooltipVisible]);
+
+  // Recalculate tooltip position on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (isTooltipVisible) {
+        calculateTooltipPosition();
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isTooltipVisible]);
+
+  const calculateTooltipPosition = () => {
+    if (infoButtonRef.current) {
+      const rect = infoButtonRef.current.getBoundingClientRect();
+      const isMobile = window.innerWidth < 640; // sm breakpoint
+      setIsMobileTooltip(isMobile);
+
+      if (isMobile) {
+        // On mobile, position tooltip to the left to avoid cutoff
+        setTooltipPosition({
+          top: rect.top - 10,
+          left: Math.max(16, rect.left - 100) // Ensure it doesn't go off-screen left
+        });
+      } else {
+        // Desktop positioning - center horizontally
+        setTooltipPosition({
+          top: rect.top - 10,
+          left: rect.left + rect.width / 2
+        });
+      }
+    }
+  };
+
+  const toggleTooltip = () => {
+    if (isTooltipVisible) {
+      setTooltipAnimating(true);
+      setTimeout(() => {
+        setIsTooltipVisible(false);
+        setTooltipAnimating(false);
+      }, 200);
+    } else {
+      calculateTooltipPosition();
+      setIsTooltipVisible(true);
+    }
+  };
+
   return <>
       {/* Chat Toggle Button */}
       <button
         onClick={toggleChatbot}
         className={`
           fixed bottom-6 right-6 z-50
+          max-sm:bottom-4 max-sm:right-4
           p-3 rounded-full
           bg-gradient-to-br from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500
           text-white
@@ -318,7 +457,10 @@ const Chatbot = () => {
       {/* Chat Panel */}
       {(isOpen || isClosing) && (
         <div className={`
-          fixed bottom-24 right-6 w-[350px] h-[550px]
+          fixed w-[350px] h-[550px] bottom-24 right-6
+          sm:w-[350px] sm:h-[550px] sm:bottom-24 sm:right-6
+          max-sm:w-[320px] max-sm:h-[70vh] max-sm:max-h-[500px]
+          max-sm:bottom-20 max-sm:right-4 max-sm:left-auto
           bg-white dark:bg-gray-900
           border border-gray-200 dark:border-gray-800
           rounded-2xl shadow-2xl
@@ -358,6 +500,16 @@ const Chatbot = () => {
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                   </span>
                   <span className="text-xs text-gray-500 dark:text-gray-400">Online</span>
+                  <div className="relative ml-1">
+                    <button
+                      ref={infoButtonRef}
+                      onClick={toggleTooltip}
+                      className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                      aria-label="Show tooltip"
+                    >
+                      <Info size={14} className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 transition-colors" />
+                    </button>
+                  </div>
                 </div>
               </div>
               <button
@@ -557,6 +709,36 @@ const Chatbot = () => {
               </div>
             </form>
           </div>
+        </div>
+      )}
+
+      {/* Tooltip rendered outside chatbot container */}
+      {isTooltipVisible && (
+        <div
+          ref={tooltipRef}
+          className={`
+            fixed z-[70] w-64 max-sm:w-52
+            origin-bottom rounded-lg bg-gray-900 px-3 py-2.5 text-center text-xs font-medium text-white
+            shadow-lg border border-gray-700 dark:bg-gray-700 dark:border-gray-600
+            ${tooltipAnimating
+              ? (isMobileTooltip ? 'animate-tooltip-out' : 'animate-tooltip-out-desktop')
+              : (isMobileTooltip ? 'animate-tooltip-in' : 'animate-tooltip-in-desktop')
+            }
+            transform -translate-y-full ${isMobileTooltip ? '' : '-translate-x-1/2'}
+          `}
+          style={{
+            top: `${tooltipPosition.top}px`,
+            left: `${tooltipPosition.left}px`
+          }}
+        >
+          <div className="flex items-center justify-center gap-1.5">
+            <Info size={12} className="text-blue-300 flex-shrink-0" />
+            <span className="leading-relaxed">The first response may take some time. Please wait.</span>
+          </div>
+          <div className={`
+            absolute top-full h-0 w-0 border-x-4 border-x-transparent border-t-4 border-t-gray-900 dark:border-t-gray-700
+            ${isMobileTooltip ? 'left-24' : 'left-1/2 transform -translate-x-1/2'}
+          `}></div>
         </div>
       )}
     </>;
