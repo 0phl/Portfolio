@@ -38,12 +38,11 @@ const ExperienceSection = () => {
       company: 'Self-Initiated | Freelance-style builds',
       period: '2024 – Present',
       description: [
-        'Developed AroundU, a neighborhood and business guide app using Firebase and Leaflet.js for location-based listings and community features',
-        'Built S&Z Hot Pot Haven, an e-commerce-inspired food ordering system with real-time order tracking and automated PDF invoice generation',
-        'Created responsive UIs for portfolio and business apps using React, Vite, TypeScript, and Tailwind CSS',
-        'Developed a Car Rental System using PHP and MySQL, including booking functionality and admin-side management',
-        'Utilized Firebase and Flutter Web in various projects for real-time data handling, user authentication, and admin dashboards',
-        'Completed several additional projects showcasing diverse skills in web and mobile development, each addressing unique user requirements and technical challenges'
+        'IskedyulKo — Appointment Booking System (React, Node.js, MySQL): Designed a shareable, no-login booking flow with business dashboards, JWT auth, and a responsive UI for small Filipino businesses.',
+        'S&Z Hot Pot Haven — E-commerce platform (PHP, MySQL, Bootstrap): Built a product catalog, shopping cart, and admin dashboard with real-time order tracking and PDF invoicing.',
+        'AroundU — Neighborhood & Local Business Guide (React, Firebase, Leaflet.js): Developed interactive map listings, business profiles, distance calculation, and real-time offers for local engagement.',
+        'Car Rental System — Full-stack management system (PHP, MySQL): Created a booking system with no-registration booking, reference tracking, admin management, and PDF reports.',
+        'Leveraged a modern tech stack including React, Node.js, TypeScript, PHP, and Mysql to build scalable and feature-rich applications.'
       ]
     }
   ];
