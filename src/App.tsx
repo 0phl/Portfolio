@@ -8,6 +8,7 @@ import EducationSection from './components/EducationSection';
 
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
+import { initializeBackendWakeup } from './services/backendWakeup';
 
 export function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => localStorage.getItem('theme') as 'light' | 'dark' || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
@@ -39,14 +40,13 @@ export function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Preload critical resources and handle initial loading state
   useEffect(() => {
-    // Add a small delay to ensure all styles are properly loaded
+    initializeBackendWakeup();
+    
     const timer = setTimeout(() => {
       setLoading(false);
     }, 800);
     
-    // Preload critical images
     const profileImage = new Image();
     profileImage.src = '/images/profile/Myphoto.png';
     
