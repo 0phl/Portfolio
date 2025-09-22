@@ -416,7 +416,7 @@ const ProjectsSection = () => {
                         className="flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
                       >
                         <ExternalLink size={16} />
-                        {isMobileApp(selectedProject.category)
+                        {selectedProject.category === "Mobile Application"
                           ? (selectedProject.isLiveDemo ? "View Live" : "Download")
                           : "View Live"}
                       </a>

@@ -17,6 +17,30 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: "lutong-bahai",
+    title: "Lutong BahAI",
+    description:
+      "A mobile-first, AI-powered Filipino recipe web application that helps users discover and generate authentic recipes based on available ingredients, dietary preferences, and cooking experience. Features an intelligent chat interface that remembers context across sessions, smart recipe recommendations rooted in Filipino cuisine, AI-generated recipes with detailed steps and tips, automatic recipe image generation, searchable recipe collection with local saving via IndexedDB, and a built-in cooking timer with customizable steps and audio alerts.",
+    images: [
+      "/images/projects/lutongbahai/lutongbahai1.jpg",
+      "/images/projects/lutongbahai/lutongbahai2.jpg",
+      "/images/projects/lutongbahai/lutongbahai3.jpg",
+      "/images/projects/lutongbahai/lutongbahai4.jpg",
+    ],
+    tags: [
+      "Next.js",
+      "TypeScript",
+      "Shadcn/ui",
+      "Google Gemini",
+      "IndexedDB"
+    ],
+    category: "MobileWebApp",
+    featured: true,
+    github: "https://github.com/0phl/LutongBahAI",
+    liveLink: "https://lutong-bahai.vercel.app/",
+    status: "completed"
+  },
+  {
     id: "sz-hotpot-haven",
     title: "S&Z Hot Pot Haven",
     description:
@@ -80,6 +104,26 @@ export const projects: Project[] = [
     status: "completed",
     startDate: "2025-02",
     endDate: "2025-02"
+  },
+
+  {
+    id: "adj-automotive",
+    title: "ADJ Automotive Repair Services",
+    description:
+      "A business web application for an automotive repair service featuring online booking/quote requests, cars-for-sale listings, and an admin dashboard to manage appointments, vehicle inventory, and sales. Built with a React + TypeScript frontend, Laravel backend, and MySQL database.",
+    images: [
+      "/images/projects/adjauto/adjauto1.jpg",
+      "/images/projects/adjauto/adjauto2.jpg",
+      "/images/projects/adjauto/adjauto3.jpg",
+      "/images/projects/adjauto/adjauto4.jpg",
+      "/images/projects/adjauto/adjauto5.jpg",
+    ],
+    tags: ["React", "TypeScript", "Laravel", "MySQL", "Tailwind CSS"],
+    category: "Web Application",
+    liveLink: "https://adjauto.com/",
+    featured: true,
+    url: "adjauto.com",
+    status: "completed"
   },
 
   {
