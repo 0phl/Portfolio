@@ -208,6 +208,27 @@ export const projects: Project[] = [
     // Mobile apps don't need URL since they use PhoneFrame
   },
 
+  {
+    id: "lenscraft",
+    title: "LensCraft - Photography Portfolio",
+    description:
+      "A modern, responsive photography portfolio website showcasing professional photography work across multiple categories including portrait, landscape, street, and nature photography. Built as a pure frontend challenge using only HTML5, CSS3, and vanilla JavaScript - demonstrating mastery of core web technologies without frameworks or build tools.",
+    images: [
+      "/images/projects/lenscraft/lenscraft1.png",
+      "/images/projects/lenscraft/lenscraft2.png",
+      "/images/projects/lenscraft/lenscraft3.png",
+    ],
+    tags: ["HTML5", "CSS3", "JavaScript", "Responsive Design", "No Framework"],
+    category: "Web Application",
+    featured: false,
+    status: "completed",
+    startDate: "2025-09",
+    endDate: "2025-09",
+    github: "https://github.com/0phl/Photographer-Portfolio",
+    liveLink: "https://lnscrft.netlify.app/",
+    url: "lnscrft.netlify.app"
+  },
+
 
 
 
