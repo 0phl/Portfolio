@@ -2,7 +2,12 @@ import useTypewriter from '../hooks/useTypewriter';
 import { Download } from 'lucide-react';
 import LazyImage from './ui/LazyImage';
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
+}
+
+const HeroSection = ({ theme }: HeroSectionProps) => {
   // Multiple text options for the typewriter effect
   const phrases = [
     'A full-stack developer.',
@@ -66,13 +71,12 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Minimalist professional profile image */}
-          <div className="relative w-56 h-56 md:w-64 md:h-64 mt-4 md:mt-0 animate-fade-in"
-               style={{ animationDelay: '500ms' }}>
-            {/* Simple profile container with subtle shadow and border */}
-            <div className="absolute inset-0 rounded-full overflow-hidden shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(0,0,0,0.2)] border border-gray-100/30 dark:border-gray-700/30">
+          {/* Professional profile image */}
+          <div className="relative w-72 h-72 md:w-96 md:h-96 mt-4 md:mt-0">
+            {/* Clean minimalist container */}
+            <div className="absolute inset-0 overflow-hidden rounded-xl shadow-lg shadow-gray-200/50 dark:shadow-gray-800/20 border border-gray-100/50 dark:border-gray-700/30 bg-white dark:bg-gray-800">
               <LazyImage
-                src="/images/profile/Myphoto.png"
+                src={theme === 'light' ? "/images/profile/morning.svg" : "/images/profile/night.svg"}
                 alt="Ronan Dela Cruz"
                 className="w-full h-full object-cover"
                 containerClassName="w-full h-full"

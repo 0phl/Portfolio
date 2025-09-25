@@ -75,7 +75,7 @@ export function App() {
       <Header theme={theme} toggleTheme={toggleTheme} />
 
       <main className="flex-1 w-full">
-        <HeroSection />
+        <HeroSection theme={theme} toggleTheme={toggleTheme} />
         <SkillsSection />
         <ExperienceSection />
         <ProjectsSection />
